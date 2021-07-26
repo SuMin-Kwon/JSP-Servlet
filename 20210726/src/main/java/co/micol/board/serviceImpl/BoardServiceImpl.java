@@ -65,26 +65,104 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO boardSelect(BoardVO vo) {
 		// TODO 한 행만 가져오기
 		String sql = "select * from board where bid=?";
-		
+		try {
+			conn = DAO.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, vo.getbId());
+			psmt.executeQuery();
+			if (rs.next()) {
+				vo.setbId(rs.getInt("bid"));
+				vo.setbTitle(rs.getString("btitle"));
+				vo.setbContent(rs.getString("bcontent"));
+				vo.setbWriter(rs.getString("bwriter"));
+				vo.setbDate(rs.getDate("bdate"));
+				vo.setbHit(rs.getInt("bhit"));
+				
+				hitUpdate(vo.getbId());
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
 		return vo;
+	}
+
+	private void hitUpdate(int id) {
+		// TODO 조회수 증가
+		String sql = "update board set bhit = bhit + 1 where bid = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, id);
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	@Override
 	public int boardInsert(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO 게시글 등록
+		String sql = "insert into board(bid, btitle, bcontent, bwriter) "
+				+ "values (B_SEQ.nextval, ?, ?, ?)";
+		int n = 0;
+		try {
+			conn = DAO.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getbTitle());
+			psmt.setString(1, vo.getbContent());
+			psmt.setString(1, vo.getbWriter());
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return n;
 	}
 
 	@Override
 	public int boardDelete(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO 글 삭제
+		String sql = "delete from board where bid = ?";
+		int n = 0;
+		try {
+			conn = DAO.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, vo.getbId());
+			n = psmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return n;
 	}
 
 	@Override
 	public int boardUpdate(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO 글 제목과 글 내용 수정
+		String sql = "update board set btitle = ? , bcontent = ? where bid = ?";
+		int n = 0;
+		try {
+			conn = DAO.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getbTitle());
+			psmt.setString(2, vo.getbContent());
+			psmt.setInt(3, vo.getbId());
+			n = psmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return n;
 	}
 
 }

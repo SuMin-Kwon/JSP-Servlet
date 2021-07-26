@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>시작하는 곳</h1>
+	<jsp:forward page="home.do"></jsp:forward>
 </body>
 </html>
