@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import co.micol.board.command.BoardList;
 import co.micol.board.command.Command;
 import co.micol.board.command.HomeCommand;
 
@@ -37,6 +38,7 @@ public class FrontController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		// TODO 사용할 Command를 정의
 		map.put("/home.do", new HomeCommand());
+		map.put("/boardList.do", new BoardList());
 	}
 
 	/**

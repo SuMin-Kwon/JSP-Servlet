@@ -20,9 +20,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardVO> boardSelectList() {
-		// TODO 게시판 전체 목록
+		// TODO 게시판 목록 가져오기
 		List<BoardVO> list = new ArrayList<BoardVO>();
-		String sql = "select * from board";
+		String sql = "select * from board order by bid desc";
 		BoardVO vo;
 		try {
 			conn = DAO.getConnection();
@@ -31,20 +31,19 @@ public class BoardServiceImpl implements BoardService {
 			while (rs.next()) {
 				vo = new BoardVO();
 				vo.setbId(rs.getInt("bid"));
-				vo.setbTitle(rs.getString("btitle"));
-	//			vo.setbContent(rs.getString("bcontent"));
-				vo.setbWriter(rs.getString("bwriter"));
+				vo.setbTitle(rs.getNString("btitle"));
+//				 vo.setbContent(rs.getString("bcontent"));
+				vo.setbWriter(rs.getNString("bwriter"));
 				vo.setbDate(rs.getDate("bdate"));
 				vo.setbHit(rs.getInt("bhit"));
 				list.add(vo);
 			}
-			
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		
+
 		return list;
 	}
 
