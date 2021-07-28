@@ -6,12 +6,11 @@ import co.micol.board.vo.BoardVO;
 
 public interface BoardService {
 	
-	List<BoardVO> boardSelectList(); // 전체조회
+	List<BoardVO> boardSelectList(); //전체조회
 	
-	BoardVO boardSelect (BoardVO vo); // 한 행조회
+	BoardVO boardSelect(BoardVO vo); // 한 행 조회
 	
-	int boardInsert(BoardVO vo); // 등록
-	int boardDelete(BoardVO vo); // 삭제
-	int boardUpdate(BoardVO vo); // 수정
-
+	int boardInsert(BoardVO vo);
+	int boardDelete(BoardVO vo);
+	int boardUpdate(BoardVO vo);
 }

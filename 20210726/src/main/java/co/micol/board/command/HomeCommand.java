@@ -8,6 +8,7 @@ public class HomeCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO 시작페이지 돌려주기
+		
 		return "home/home";
 	}
 

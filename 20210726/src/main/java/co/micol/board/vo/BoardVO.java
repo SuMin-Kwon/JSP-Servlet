@@ -1,9 +1,9 @@
 package co.micol.board.vo;
 
-import java.sql.Date;
+import java.sql.Date; // 시분초 관리가 안됨 util date는 시분초가 관리가 됨
 
 public class BoardVO {
-
+	
 	private int bId;
 	private String bTitle;
 	private String bContent;
@@ -11,7 +11,9 @@ public class BoardVO {
 	private Date bDate;
 	private int bHit;
 	
-	public BoardVO() {}
+	public BoardVO() {
+		
+	}
 
 	public int getbId() {
 		return bId;
@@ -60,7 +62,6 @@ public class BoardVO {
 	public void setbHit(int bHit) {
 		this.bHit = bHit;
 	}
-	
 	
 	
 	
