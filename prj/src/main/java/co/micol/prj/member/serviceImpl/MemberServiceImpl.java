@@ -84,21 +84,59 @@ public class MemberServiceImpl implements MemberService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return vo;
 	}
 
 	@Override
 	public MemberVO memberLogin(MemberVO vo) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql = "select name, author from member where id = ? and password = ? and state = 'Y' ";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getId());
+			psmt.setString(2, vo.getPassword());
+			rs = psmt.executeQuery(); // 실행
+			if (rs.next()) {
+				vo.setName(rs.getString("name"));
+				vo.setAuthor(rs.getString("author"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return vo;
+
 	}
 
 	@Override
 	public int memberInsert(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO 회원추가
+		String sql = "insert into member(id, password, name, age,hobby) " + "values (?,?, ?, ?, ?)";
+		int n = 0;
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getId());
+			psmt.setString(2, vo.getPassword());
+			psmt.setString(3, vo.getName());
+			psmt.setInt(4, vo.getAge());
+			psmt.setString(5, vo.getHobby());
+			n = psmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return n;
+
 	}
 
 	@Override

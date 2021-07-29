@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import co.micol.prj.common.Command;
 import co.micol.prj.member.web.Home;
+import co.micol.prj.member.web.InsertForm;
+import co.micol.prj.member.web.InsertMember;
 import co.micol.prj.member.web.Login;
+import co.micol.prj.member.web.MemberFail;
 import co.micol.prj.member.web.MemberList;
 import co.micol.prj.member.web.MemberOneList;
 
@@ -31,6 +34,9 @@ public class WebController extends HttpServlet {
 		map.put("/home.do", new Home());
 		map.put("/memberOneList.do", new MemberOneList());
 		map.put("/login.do", new Login());
+		map.put("/insertMember.do", new InsertMember());
+		map.put("/insertForm.do", new InsertForm());
+		map.put("/memberFail.do", new MemberFail());
 
 	}
 

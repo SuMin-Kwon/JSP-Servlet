@@ -41,8 +41,8 @@
 		</div>
 		<br/>
 		<div>
-			<button type="button" onclick="location.href='home.do'">홈 가기</button>&nbsp;&nbsp;&nbsp;
-			<button type="button" onclick="location.href='insertForm.do'">새글작성</button>
+			<button type="button" onclick="location.href='home.do'">로그아웃</button>&nbsp;&nbsp;&nbsp;
+			<button type="button" onclick="location.href='insertForm.do'">회원추가</button>
 		</div>
 		<div>
 			<form id="frm" name="frm" action="memberOneList.do" method="post"> 
