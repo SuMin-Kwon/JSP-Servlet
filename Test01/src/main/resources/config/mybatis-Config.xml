@@ -3,8 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="/db.properties">
+	<properties resource="config/db.properties">
 	</properties>
+	
+	<typeAliases>
+		<typeAlias type="co.yedam.test.vo.TestVO" alias="TestVO" />
+	</typeAliases>
 	
 	<environments default="development">
 		<environment id="development">
@@ -18,7 +22,7 @@
 		</environment>
 	</environments>
 	<mappers><!-- 실제 적용할 SQL 매퍼들의 집합 -->
-
+		<mapper resource="co/yedam/test/service/Test-map.xml" />
 	</mappers>
 
 

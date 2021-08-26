@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yedam.test.service.TestService">
 
+	<!-- 전체 상품 리스트 조회 -->
+	<select id="testList" resultType="TestVO">
+		SELECT * FROM test
+	</select>
 
+	<!-- 상품 한건 조회 -->
+	<select id="testSelect" parameterType="TestVO"
+	resultType="TestVO">
+		SELECT * FROM test where no = #{no}
+	</select>
+
+	<!-- 상품 등록 -->
+	<insert id="testInsert" parameterType="TestVO" >
+		insert into test values (
+			TEST_SEQ.nextval, #{id}, #{tel}, #{birth} ,#{address} , #{name})
+	</insert>
+
+	<!-- 상품 수정 -->
+	<update id="testUpdate" parameterType="TestVO">
+		update test set name = #{name}, tel = #{tel}, birth = #{birth}, address= #{address}
+		where no = #{no}
+	</update>
+
+	<!-- 상품 삭제 -->
+	<delete id="testDelete" parameterType="TestVO">
+		delete from test where no = #{no}
+	</delete>
 
 </mapper>

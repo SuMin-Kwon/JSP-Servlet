@@ -9,6 +9,7 @@ public class TestVO {
 	private String tel;
 	private Date birth;
 	private String address;
+	private String name;
 	
 	public TestVO() {
 		// TODO Auto-generated constructor stub
@@ -45,6 +46,15 @@ public class TestVO {
 		this.address = address;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 	
 	
 }
