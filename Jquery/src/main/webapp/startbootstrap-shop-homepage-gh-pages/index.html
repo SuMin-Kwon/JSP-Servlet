@@ -6,7 +6,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Shop Homepage - Start Bootstrap Template</title>
+<title>Coffer Shop - Start Bootstrap Template</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Bootstrap icons-->
@@ -27,7 +27,7 @@
 		console.log(contents);
 		
 		$.ajax({
-			url : '../ItemListServlet.do', // 요청페이지
+			url : '../ItemListServlet.do', // 요청페이지 
 			dataType : 'json', 
 			success : function(result) {
 				console.log(result);
@@ -41,6 +41,8 @@
 		});
 		
 	});
+	
+	
 	function makeRowDate(obj){
 		let div_col = $('<div />').addClass('col mb-5');
 		let div_card = $('<div />').addClass('card h-100');
