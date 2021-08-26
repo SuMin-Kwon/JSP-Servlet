@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="home.do"></jsp:forward>
+<div align="center">
+	<div><h2>TEST 시험</h2></div>
+	<br>
+	<div>
+		
+	</div>
+</div>
 </body>
 </html>
