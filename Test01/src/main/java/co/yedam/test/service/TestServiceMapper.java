@@ -9,7 +9,7 @@ import co.yedam.test.vo.TestVO;
 
 public class TestServiceMapper implements TestService {
 	
-	private SqlSession sqlSession = DataSource.getInstance().openSession();
+	private SqlSession sqlSession = DataSource.getInstance().openSession(true);
 	private TestService map = sqlSession.getMapper(TestService.class);
 
 	@Override

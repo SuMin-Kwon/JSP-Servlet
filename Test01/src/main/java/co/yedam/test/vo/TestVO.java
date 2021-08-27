@@ -54,6 +54,12 @@ public class TestVO {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "TestVO [no=" + no + ", id=" + id + ", tel=" + tel + ", birth=" + birth + ", address=" + address
+				+ ", name=" + name + "]";
+	}
+
 	
 	
 	
