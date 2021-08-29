@@ -1,6 +1,8 @@
 package co.yedam.test.command;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,35 +16,40 @@ import co.yedam.test.service.TestServiceMapper;
 import co.yedam.test.vo.TestVO;
 
 
-@WebServlet("/SelectOneServlet")
-public class SelectOneServlet extends HttpServlet {
+@WebServlet("/ModifyServlet")
+public class ModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-    public SelectOneServlet() {
+   
+    public ModifyServlet() {
         super();
     }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/json;charset=utf-8");
 		
 		TestServiceMapper dao = new TestServiceMapper();
 		TestVO vo = new TestVO();
+		TestVO Uvo = new TestVO();
+		
+		
 		vo.setId(request.getParameter("id"));
-		vo = dao.testSelect(vo);
+		vo.setName(request.getParameter("name"));
+		vo.setTel(request.getParameter("tel"));
+		vo.setAddress(request.getParameter("address"));
+		dao.testUpdate(vo); //수정
+		Uvo = dao.testSelect(vo); //수정한 건 가지고 오기
+		
 		
 		Gson gson = new GsonBuilder().create();
-
-		response.getWriter().print(gson.toJson(vo));
+		response.getWriter().print(gson.toJson(Uvo));		
 		
+	
 	}
 
 }

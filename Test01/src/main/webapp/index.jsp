@@ -8,90 +8,140 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style>
+	#selectTable > tbody > tr:hover{
+		background-color: #cce3ff;
+	}
+</style>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-	// 조회버튼
-	$('#selectListBtn').on('click',function() {
-	$.ajax({
-		url: 'SelectServlet',
-		type: 'POST',
-		dataType: 'json',
-		success: function(obj) {
-			$('#selectTable').empty();
-			thead();
-			for (let data of obj) {
-				listFnc(data);
-			} 
-		},
-		error : function(reject) {
-			console.log('[error!!!!!!!]'+reject);
-			}
+
+	$(document).ready(function() {
+		
+		// 조회버튼
+		$('#selectListBtn').on('click',function() {
+		$.ajax({
+			url: 'SelectServlet',
+			type: 'POST',
+			dataType: 'json',
+			success: function(obj) {
+				$('#selectTable > tbody').empty();
+				//thead();
+				for (let data of obj) {
+					listFnc(data);
+				} 
+				trClick();
+			},
+			error : function(reject) {
+				console.log('[error!!!!!!!]'+reject);
+				}
+			})
 		})
-	})
-	
-	// 입력버튼
-	 $('#insertBtn').on('click',function() {
-		$.ajax({
-			url: 'InsertServlet',
-			type: 'POST',
-			data : $('#frm').serialize(),
-			dataType: 'json',
-			success: function(obj) {
-				console.log(obj);
-				addList(obj);
-			},
-			error : function(reject) {
-				console.log('[error!!!!!!!]'+reject);
+		
+		// 입력버튼
+		 $('#insertBtn').on('click',function() {
+			$.ajax({
+				url: 'InsertServlet',
+				type: 'POST',
+				data : $('#frm').serialize(),
+				dataType: 'json',
+				success: function(obj) {
+					console.log(obj);
+					addList(obj);
+				},
+				error : function(reject) {
+					console.log('[error!!!!!!!]'+reject);
 				}
 			})
-	})
-	
-	// 테이블 한건 클릭시 입력폼으로
-	$('.trNo').on('click',function() {
-		$.ajax({
-			url: 'SelectOneServlet',
-			type: 'POST',
-			data : { no : $('trNo').attr('no') },
-			dataType: 'json',
-			success: function(obj) {
-				$('#id').val(obj.id);
-				$('#name').val(obj.name);
-				$('#tel').val(obj.tel);
-				$('#address').val(obj.address);
-				$('#brith').val(obj.brith);
-			},
-			error : function(reject) {
-				console.log('[error!!!!!!!]'+reject);
+		})
+		
+		
+		// 수정버튼
+		$('#modifyBtn').on('click',function() {
+			$.ajax({
+				url: 'ModifyServlet',
+				type: 'POST',
+				data : $('#frm').serialize(),
+				dataType: 'json',
+				success: function(obj) {
+					alert('수정완료!');
+					//trDelete(obj);
+					$.ajax({
+						url: 'SelectServlet',
+						type: 'POST',
+						dataType: 'json',
+						success: function(obj) {
+							$('#selectTable > tbody').empty();
+							//thead();
+							for (let data of obj) {
+								listFnc(data);
+							} 
+							trClick();
+						},
+						error : function(reject) {
+							console.log('[error!!!!!!!]'+reject);
+							}
+						})
+				},
+				error : function(request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			})
-	})
+		})
 	
 		
+		
+	});
+	
+	// 기존요소 삭제 후 새로운 요소로 추가
+	function trDelete(obj){
+		let sel = obj.id;
+		console.log($('td:contains(sel)').parent());
+		//$(':contains(obj.id)').parent().remove();
+		//addList(obj);
+		
+	}
+	
+	// 테이블 한건 클릭시 입력폼으로
+	function trClick(){
+		$('#selectTable > tbody > tr').on('click',function() {
+			$.ajax({
+				url: 'SelectOneServlet',
+				type: 'POST',
+				data : { id : $(this).children('td:eq(0)').text() },
+				dataType: 'json',
+				success: function(obj) {
+					$('#id').val(obj.id);
+					$('#name').val(obj.name);
+					$('#tel').val(obj.tel);
+					$('#address').val(obj.address);
+					$('#birth').val(obj.birth);
+				},
+				error : function(reject) {
+					console.log('[error!!!!!!!]'+reject);
+				}
+			})			
+		})
+	}
+	
+	
+	
+	// insert 추가 입력한거 추가
+	function addList(obj){
+		let tr = $('<tr />').addClass('trNo');
+		let td1 = $('<td />').addClass('trId').text(obj.id);
+		let td2 = $('<td />').text(obj.name);
+		let td3 = $('<td />').text(obj.tel);
+		let td4 = $('<td />').text(obj.address);
+		let td5 = $('<td />').text(obj.birth);
+		$(tr).append(td1, td2, td3, td4, td5);
+		$('#selectTable > tbody').append(tr);
+	}
+	
 
-	
-	
-	
-});
-	
-// 입력한거 추가
-function addList(obj){
-	let tbody = $('<tbody />');
-	let tr = $('<tr />');
-	let td1 = $('<td />').text(obj.id);
-	let td2 = $('<td />').text(obj.name);
-	let td3 = $('<td />').text(obj.tel);
-	let td4 = $('<td />').text(obj.address);
-	let td5 = $('<td />').text(obj.birth);
-	$(tr).append(td1, td2, td3, td4, td5);
-	$(tbody).append(tr);
-	$('#selectTable').append(tbody);
-}
-	
 
-
-// 조회테이블 thead
-function thead() {
+// 조회테이블 헤더부분 thead
+/* function thead() {
 	let thead = $('<thead />');
 	let tr = $('<tr />');
 	let td1 = $('<th />').text("아이디");
@@ -103,21 +153,19 @@ function thead() {
 	$(thead).append(tr);
 	$('#selectTable').append(thead);
 }
-
+*/
 
 // 조회
-function listFnc(data) {	
-	let tbody = $('<tbody />');
-	let tr = $('<tr />').addClass('trNo').attr('no',data.no);
-	let td1 = $('<td />').addClass('trId').text(data.id);
-	let td2 = $('<td />').text(data.name);
-	let td3 = $('<td />').text(data.tel);
-	let td4 = $('<td />').text(data.address);
-	let td5 = $('<td />').text(data.birth);
-	$(tr).append(td1, td2, td3, td4, td5);
-	$(tbody).append(tr);
-	$('#selectTable').append(tbody);
-}
+	function listFnc(data) {	
+		let tr = $('<tr />').addClass('trNo');
+		let td1 = $('<td />').addClass('trId').text(data.id);
+		let td2 = $('<td />').text(data.name);
+		let td3 = $('<td />').text(data.tel);
+		let td4 = $('<td />').text(data.address);
+		let td5 = $('<td />').text(data.birth);
+		$(tr).append(td1, td2, td3, td4, td5);
+		$('#selectTable > tbody').append(tr);
+	}
 </script>
 <title>TEST</title>
 </head>
@@ -150,7 +198,7 @@ function listFnc(data) {
 							<td><input type="text" id="tel" name="tel"></td>
 							<td></td>
 							<td>
-								<button class="btn btn-primary" type="button">수정하기</button>
+								<button id="modifyBtn" class="btn btn-primary" type="button">수정하기</button>
 							</td>
 						</tr>
 						<tr>
@@ -168,7 +216,7 @@ function listFnc(data) {
 		<div class="row">
 			<div class="col-12">
 				<table id="selectTable" class="table table-bordered">
-					<thead>
+					<thead class="thead">
 						<tr class="text-center">
 							<th>아 이 디</th>
 							<th>이 름</th>
@@ -177,7 +225,9 @@ function listFnc(data) {
 							<th>생년월일</th>
 						</tr>
 					</thead>
-
+					<tbody class="tbody">
+					
+					</tbody>
 					<!--<c:forEach var="list" items="${list}">
 						<tr>
 							<td>${list.id }</td>

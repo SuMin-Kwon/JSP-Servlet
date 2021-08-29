@@ -10,7 +10,7 @@
 	<!-- 상품 한건 조회 -->
 	<select id="testSelect" parameterType="TestVO"
 	resultType="TestVO">
-		SELECT * FROM test where no = #{no}
+		SELECT * FROM test where id = #{id}
 	</select>
 
 	<!-- 상품 등록 -->
@@ -21,13 +21,13 @@
 
 	<!-- 상품 수정 -->
 	<update id="testUpdate" parameterType="TestVO">
-		update test set name = #{name}, tel = #{tel}, birth = #{birth}, address= #{address}
-		where no = #{no}
+		update test set name = #{name}, tel = #{tel},address= #{address}
+		where id = #{id}
 	</update>
 
 	<!-- 상품 삭제 -->
 	<delete id="testDelete" parameterType="TestVO">
-		delete from test where no = #{no}
+		delete from test where id = #{id}
 	</delete>
 
 </mapper>
