@@ -36,6 +36,7 @@ public class InsertServlet extends HttpServlet {
 		
 		TestServiceMapper dao = new TestServiceMapper();
 		TestVO vo = new TestVO();
+		TestVO Uvo = new TestVO();
 		
 		vo.setId(request.getParameter("id"));
 		vo.setName(request.getParameter("name"));
@@ -43,10 +44,11 @@ public class InsertServlet extends HttpServlet {
 		vo.setAddress(request.getParameter("address"));
 		vo.setBirth(Date.valueOf(request.getParameter("birth")));
 		dao.testInsert(vo);
+		Uvo = dao.testSelect(vo); //수정한 건 가지고 오기
 
 		Gson gson = new GsonBuilder().create();
 
-		response.getWriter().print(gson.toJson(vo));
+		response.getWriter().print(gson.toJson(Uvo));
 		
 	}
 

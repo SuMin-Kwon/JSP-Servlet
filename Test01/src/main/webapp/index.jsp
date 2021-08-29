@@ -31,6 +31,7 @@
 					listFnc(data);
 				} 
 				trClick();
+				trDelete();
 			},
 			error : function(reject) {
 				console.log('[error!!!!!!!]'+reject);
@@ -65,14 +66,12 @@
 				dataType: 'json',
 				success: function(obj) {
 					alert('수정완료!');
-					//trDelete(obj);
 					$.ajax({
 						url: 'SelectServlet',
 						type: 'POST',
 						dataType: 'json',
 						success: function(obj) {
 							$('#selectTable > tbody').empty();
-							//thead();
 							for (let data of obj) {
 								listFnc(data);
 							} 
@@ -93,12 +92,12 @@
 		
 	});
 	
-	// 기존요소 삭제 후 새로운 요소로 추가
-	function trDelete(obj){
-		let sel = obj.id;
-		console.log($('td:contains(sel)').parent());
-		//$(':contains(obj.id)').parent().remove();
-		//addList(obj);
+
+	// tr 삭제
+	function trDelete(){
+		$('#deleteBtn').on('click',function() {
+			alert($(this).attr('no'));
+		})
 		
 	}
 	
@@ -128,14 +127,23 @@
 	
 	// insert 추가 입력한거 추가
 	function addList(obj){
-		let tr = $('<tr />').addClass('trNo');
+		let tr = $('<tr />').addClass('trNo').attr('no',obj.no);
 		let td1 = $('<td />').addClass('trId').text(obj.id);
 		let td2 = $('<td />').text(obj.name);
 		let td3 = $('<td />').text(obj.tel);
 		let td4 = $('<td />').text(obj.address);
 		let td5 = $('<td />').text(obj.birth);
-		$(tr).append(td1, td2, td3, td4, td5);
+		
+		let btn = $('<button />').addClass('btn btn-primary')
+								 .attr('type','button')
+								 .attr('id','deleteBtn')
+								 .attr('no',obj.no)
+								 .text('삭제하기');
+		let td6 = $('<td />');
+		$(td6).append(btn);		
+		$(tr).append(td1, td2, td3, td4, td5, td6);
 		$('#selectTable > tbody').append(tr);
+
 	}
 	
 
@@ -157,13 +165,22 @@
 
 // 조회
 	function listFnc(data) {	
-		let tr = $('<tr />').addClass('trNo');
+		let tr = $('<tr />').addClass('trNo').attr('no',data.no);
 		let td1 = $('<td />').addClass('trId').text(data.id);
 		let td2 = $('<td />').text(data.name);
 		let td3 = $('<td />').text(data.tel);
 		let td4 = $('<td />').text(data.address);
 		let td5 = $('<td />').text(data.birth);
-		$(tr).append(td1, td2, td3, td4, td5);
+		
+		let btn = $('<button />').addClass('btn btn-primary')
+								 .attr('type','button')
+								 .attr('id','deleteBtn')
+								 .attr('no',data.no)
+								 .text('삭제하기');		
+		let td6 = $('<td />');
+		$(td6).append(btn);
+		
+		$(tr).append(td1, td2, td3, td4, td5, td6);
 		$('#selectTable > tbody').append(tr);
 	}
 </script>
@@ -203,9 +220,8 @@
 						</tr>
 						<tr>
 							<td>주소 :</td>
-							<td><input type="text" id="address" name="address"></td>
+							<td colspan="2"><input type="text" id="address" name="address" size="50"></td>
 							<td></td>
-							<td><button class="btn btn-primary" type="button">삭제하기</button></td>
 						</tr>
 					</table>
 				</form>
@@ -223,6 +239,7 @@
 							<th>연 락 처</th>
 							<th>주 소</th>
 							<th>생년월일</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody class="tbody">
