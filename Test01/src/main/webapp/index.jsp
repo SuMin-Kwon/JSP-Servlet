@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -49,6 +48,7 @@
 				success: function(obj) {
 					console.log(obj);
 					addList(obj);
+					trClick();
 				},
 				error : function(reject) {
 					console.log('[error!!!!!!!]'+reject);
@@ -134,7 +134,7 @@
 		let td4 = $('<td />').text(obj.address);
 		let td5 = $('<td />').text(obj.birth);
 		
-		let btn = $('<button />').addClass('btn btn-primary')
+		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
 								 .attr('id','deleteBtn')
 								 .attr('no',obj.no)
@@ -172,7 +172,7 @@
 		let td4 = $('<td />').text(data.address);
 		let td5 = $('<td />').text(data.birth);
 		
-		let btn = $('<button />').addClass('btn btn-primary')
+		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
 								 .attr('id','deleteBtn')
 								 .attr('no',data.no)
@@ -221,7 +221,9 @@
 						<tr>
 							<td>주소 :</td>
 							<td colspan="2"><input type="text" id="address" name="address" size="50"></td>
-							<td></td>
+							<td>
+								<button id="resetBtn" class="btn btn-primary" type="reset">리셋하기</button>
+							</td>
 						</tr>
 					</table>
 				</form>
