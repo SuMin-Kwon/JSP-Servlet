@@ -30,7 +30,7 @@
 					listFnc(data);
 				} 
 				trClick();
-				trDelete();
+				trDelete(obj);
 			},
 			error : function(reject) {
 				console.log('[error!!!!!!!]'+reject);
@@ -94,9 +94,10 @@
 	
 
 	// tr 삭제
-	function trDelete(){
+	function trDelete(obj){
 		$('#deleteBtn').on('click',function() {
-			alert($(this).attr('no'));
+			alert($(this).attr('btnNo'));
+			$(this).parent().parent().remove();
 		})
 		
 	}
@@ -137,13 +138,12 @@
 		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
 								 .attr('id','deleteBtn')
-								 .attr('no',obj.no)
+								 .attr('btnNo',obj.no)
 								 .text('삭제하기');
 		let td6 = $('<td />');
 		$(td6).append(btn);		
 		$(tr).append(td1, td2, td3, td4, td5, td6);
 		$('#selectTable > tbody').append(tr);
-
 	}
 	
 
@@ -175,7 +175,7 @@
 		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
 								 .attr('id','deleteBtn')
-								 .attr('no',data.no)
+								 .attr('btnNo',data.no)
 								 .text('삭제하기');		
 		let td6 = $('<td />');
 		$(td6).append(btn);
