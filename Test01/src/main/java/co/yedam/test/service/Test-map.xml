@@ -27,7 +27,7 @@
 
 	<!-- 상품 삭제 -->
 	<delete id="testDelete" parameterType="TestVO">
-		delete from test where id = #{id}
+		delete from test where no = #{no}
 	</delete>
 
 </mapper>

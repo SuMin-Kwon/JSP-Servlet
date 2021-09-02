@@ -137,8 +137,7 @@
 		
 		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
-								 .attr('id','deleteBtn')
-								 .attr('btnNo',obj.no)
+								 .attr('id','deleteBtn' + obj.no)
 								 .text('삭제하기');
 		let td6 = $('<td />');
 		$(td6).append(btn);		
@@ -174,9 +173,27 @@
 		
 		let btn = $('<button />').addClass('btn btn-dark')
 								 .attr('type','button')
-								 .attr('id','deleteBtn')
-								 .attr('btnNo',data.no)
+								 .attr('id','deleteBtn' + data.no)
 								 .text('삭제하기');		
+		
+		$(btn).on('click', function() {
+			$.ajax({
+				url: 'DeleteServlet',
+				type: 'POST',
+				data : { no : data.no },
+				dataType: 'json',
+				success: function(obj) {
+					alert('click');
+					$(this).parent().parent().remove();
+				},
+				error : function(reject) {
+					console.log('[error!!!!!!!]'+reject);
+				}
+			})
+			
+			
+		})
+		
 		let td6 = $('<td />');
 		$(td6).append(btn);
 		
